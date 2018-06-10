@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 import googlesearch as gs
 import requests
 from tkinter import *
+from urllib3 import *
+from urllib import *
 
 def exitf(a):
     root.destroy()
@@ -63,11 +65,35 @@ def downloadsingle(q,x,qso):
     tdisp = "Googling - "+q+"\n"
     status.insert(INSERT, tdisp)
     possible = []
-    for j in gs.search(q, tld="com", num=10, stop=1, pause=3):
-        sp = "https://subscene.com/subtitles/"
-        n = len(sp)
-        if j[:n] == sp:
-            possible.append(j)
+    try:
+        for j in gs.search(q, tld="com", num=10, stop=1, pause=3):
+            sp = "https://subscene.com/subtitles/"
+            n = len(sp)
+            if j[:n] == sp:
+                possible.append(j)
+    except Exception:
+        tdisp = "Error in googling...Retry 1...\n"
+        status.insert(INSERT, tdisp)
+        try:
+            for j in gs.search(q, tld="com", num=10, stop=1, pause=3):
+                sp = "https://subscene.com/subtitles/"
+                n = len(sp)
+                if j[:n] == sp:
+                    possible.append(j)
+        except Exception:
+            tdisp = "Error in googling...Retry 2...\n"
+            status.insert(INSERT, tdisp)
+            try:
+                for j in gs.search(q, tld="com", num=10, stop=1, pause=3):
+                    sp = "https://subscene.com/subtitles/"
+                    n = len(sp)
+                    if j[:n] == sp:
+                        possible.append(j)
+            except Exception:
+                tdisp = "Error in googling...Skipping this movie...\n"
+                status.insert(INSERT, tdisp)
+                return
+
     fin = ""
     for p in possible:
         c = 0
@@ -118,7 +144,22 @@ def downloadsingle(q,x,qso):
         if bool(urll):
             tdisp = "Downloading from URL - " + urll + "\n"
             status.insert(INSERT, tdisp)
-            r = requests.get(urll, allow_redirects=True)
+            try:
+                r = requests.get(urll, allow_redirects=True)
+            except Exception:
+                tdisp = "Error in connection...Retry 1...\n"
+                status.insert(INSERT, tdisp)
+                try:
+                    r = requests.get(urll, allow_redirects=True)
+                except Exception:
+                    tdisp = "Error in connection again...Retry 2...\n"
+                    status.insert(INSERT, tdisp)
+                    try:
+                        r = requests.get(urll, allow_redirects=True)
+                    except Exception:
+                        tdisp = "Error in connection yet again...Skipping...\n"
+                        status.insert(INSERT, tdisp)
+                        return
             location = x + "/" + temp + ".zip"
             tdisp = "Placing at location - " + location + "\n\n"
             status.insert(INSERT, tdisp)

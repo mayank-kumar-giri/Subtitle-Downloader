@@ -10,8 +10,9 @@ executables = [cx_Freeze.Executable("subd.py", base=base, icon = "icon.ico")]
 
 cx_Freeze.setup(
     name = "Subtitle Downloader - By MKG",
-    options = {"build_exe":{"packages":["tkinter","bs4","googlesearch","requests","os"], "include_files":["icon.ico"]}},
-    version = "2.0",
+    author = "Mayank Kumar Giri",
+    options = {"build_exe":{"packages":["tkinter","bs4","googlesearch","requests","os","urllib","urllib3"], "include_files":["icon.ico"]}},
+    version = "2.1",
     description = "Subtitle Downloader for a local Collection of movies. Prepared by - Mayank Kumar Giri",
     executables = executables
 )

@@ -4,8 +4,6 @@ from bs4 import BeautifulSoup
 import googlesearch as gs
 import requests
 from tkinter import *
-from urllib3 import *
-from urllib import *
 
 def exitf(a):
     root.destroy()
@@ -65,47 +63,34 @@ def downloadsingle(q,x,qso):
     tdisp = "Googling - "+q+"\n"
     status.insert(INSERT, tdisp)
     possible = []
-    try:
-        for j in gs.search(q, tld="com", num=10, stop=1, pause=3):
-            sp = "https://subscene.com/subtitles/"
-            n = len(sp)
-            if j[:n] == sp:
-                possible.append(j)
-    except Exception:
-        tdisp = "Error in googling...Retry 1...\n"
-        status.insert(INSERT, tdisp)
-        try:
-            for j in gs.search(q, tld="com", num=10, stop=1, pause=3):
-                sp = "https://subscene.com/subtitles/"
-                n = len(sp)
-                if j[:n] == sp:
-                    possible.append(j)
-        except Exception:
-            tdisp = "Error in googling...Retry 2...\n"
-            status.insert(INSERT, tdisp)
-            try:
-                for j in gs.search(q, tld="com", num=10, stop=1, pause=3):
-                    sp = "https://subscene.com/subtitles/"
-                    n = len(sp)
-                    if j[:n] == sp:
-                        possible.append(j)
-            except Exception:
-                tdisp = "Error in googling...Skipping this movie...\n"
-                status.insert(INSERT, tdisp)
-                return
-
+    for j in gs.search(q, tld="com", num=10, stop=1, pause=3):
+        sp = "https://subscene.com/subtitles/"
+        n = len(sp)
+        if j[:n] == sp:
+            possible.append(j)
     fin = ""
+    eng_flag = 0
+
     for p in possible:
         c = 0
+        ind_count = 0
+        #print("\n",ind_count," - ",p,"\n")
         for i in p:
+
             if i == '/':
                 c += 1
-        if c == 6:
+                if c==5:
+                    eng = "english/"
+                    print("\n Being CHECKED - ",p[(ind_count+1):(ind_count+9)],"\n")
+                    if(p[(ind_count+1):(ind_count+9)] == eng):
+                        eng_flag = 1
+            ind_count += 1
+        if (c == 6) and (eng_flag == 1):
             fin = p
             break
 
     # Debugging help-
-    #print("\n\n", fin, "\n\n")
+    #print("\n\nURL:  ", fin, "   HOYEEE\n\n")
     url = fin
     tdisp = "Found URL for this movie as - " + url + "\n"
     status.insert(INSERT, tdisp)
@@ -144,22 +129,7 @@ def downloadsingle(q,x,qso):
         if bool(urll):
             tdisp = "Downloading from URL - " + urll + "\n"
             status.insert(INSERT, tdisp)
-            try:
-                r = requests.get(urll, allow_redirects=True)
-            except Exception:
-                tdisp = "Error in connection...Retry 1...\n"
-                status.insert(INSERT, tdisp)
-                try:
-                    r = requests.get(urll, allow_redirects=True)
-                except Exception:
-                    tdisp = "Error in connection again...Retry 2...\n"
-                    status.insert(INSERT, tdisp)
-                    try:
-                        r = requests.get(urll, allow_redirects=True)
-                    except Exception:
-                        tdisp = "Error in connection yet again...Skipping...\n"
-                        status.insert(INSERT, tdisp)
-                        return
+            r = requests.get(urll, allow_redirects=True)
             location = x + "/" + temp + ".zip"
             tdisp = "Placing at location - " + location + "\n\n"
             status.insert(INSERT, tdisp)

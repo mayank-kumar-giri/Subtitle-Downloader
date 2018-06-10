@@ -20,7 +20,7 @@ Follow the steps below for using -
   <img src="1.png" width="100%"/>
 </p>
 
-* Click on `SELECT` to choose the main folder of collection. As soon as we click on 'Select Folder' after choosing, app starts working in background.
+* Click on `Select and Download` to choose the main folder of collection. As soon as we click on 'Select Folder' after choosing, app starts working in background.
 <p align="center">
   <img src="2.png" width="100%"/>
 </p>

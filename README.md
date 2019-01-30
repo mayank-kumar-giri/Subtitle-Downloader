@@ -11,7 +11,7 @@ The following links can also be used for downloading -
 ## Using
 We just need to choose the main folder of our movie collection, i.e., the folder that contains all movies and other sub-folders containing movies. The application will download subtitles for all the movies inside the main folder and place them with the respective movies. At last, a report `Report.txt` will be saved in the main folder which will contain details of which subtitles were downloaded successfully and where problems occurred.
 
-*After selecting the folder, the app starts working. Windows may display `Not Responding`, but, DO NOT close the application till a reasonable time (2-3 minutes for a small collection having around 15-20 movies)*
+*After selecting the folder, the app starts working. Windows may display `Not Responding`, but, don't close the application till a reasonable time (2-3 minutes for a small collection having around 15-20 movies)*
 
 Follow the steps below for using - 
 * After extracting to any desired location (through ZIP or EXE), open `subd.exe` to run the application.
